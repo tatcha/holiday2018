@@ -26,8 +26,9 @@ $config = [
             'charset' => 'UTF-8',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'api\modules\v1\models\User',
+            'enableSession' => false,
+            'loginUrl'=>null,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
