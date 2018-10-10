@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PROMOTION</title>
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
+    <script src="//use.typekit.net/lhn4dnc.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <style>
+        .container{
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        canvas{
+            left: 0;
+        }
+        .fb-share-button{
+            height: 1.5rem;
+        }
+        .scratch-pad{
+            width: 100%;
+            margin: 0 auto;
+            display: table;
+            font-family: 'sans-serif';
+            margin-bottom: 1rem;
+        }
+        .links::after{
+            display: table;
+            content: '';
+            clear: both;
+        }
+        .links .faq-link{
+            float: left;
+        }
+        .links .disclaimer-link{
+            float: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- <header>
+            <h1>HOLIDAY 2017 PROMOTION</h1>
+        </header> -->
+
+        <div id="scratch-pad" class="scratch-pad"></div>
+        <div class="links">
+            <a href="/get-tatcha/black-friday-faqs" class="faq-link">FAQs</a>
+            <a href="/get-tatcha/black-friday-terms-and-conditions" class="disclaimer-link">Promotional Disclaimer</a>
+        </div>
+        
+        <!--facebook-share-button-start-->
+        <!-- <div class="fb-share-button" data-href="https://www.facebook.com/litmus7" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Flitmus7&amp;src=sdkpreparse">Share</a>
+        </div> -->
+        <!--facebook-share-button-end-->
+
+        <!-- <div class="message">
+            Your have only one chance remaining today. You might win fusce quis libero. Pellentesque eget facillisis elit, vitae commodo enim Cras at tempor ipsum, non fermentum nulla.
+        </div>
+
+        <footer>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore voluptates rem nihil consequuntur nostrum, excepturi, quod dolorum maxime minus rerum repudiandae. Ipsa nisi esse officiis voluptas! Inventore expedita hic magni asdjas dajsdh alsjdh alsd alsdhhalsdals.
+        </footer> -->
+
+    </div>
+
+    <script src="/scripts/jquery.js"></script>
+    <script src="/scripts/wScratchPad.js"></script>
+    <script>
+        function main(){
+            var scratchPad = document.getElementById('scratch-pad');
+            scratchPad.style.height = scratchPad.offsetWidth+'px';
+            $('.scratch-pad').wScratchPad({
+                size : 70,       
+                bg : '/images/Holiday_TemariBall_PromoPage_$15Off_680x680_20171103EL.jpg',
+                fg : '/images/Holiday_TemariBall_PromoPage_ScratchPff_680x680_20171103EL.jpg',
+                cursor : 'url("/images/coin.png") 5 5, default'
+            });            
+        }
+        window.onload = window.onresize = main;
+    </script>
+    <!-- facebook-sdk-start-->
+    <!-- <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script> -->
+    <!-- facebook-sdk-end-->
+
+</body>
+</html>

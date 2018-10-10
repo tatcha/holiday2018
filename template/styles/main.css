@@ -1,0 +1,11 @@
+/* @font-face {
+    font-family: "bauer-bodoni";
+    src: url("./ec4f48.bauer-bodoni.woff") format("woff")
+} */
+
+.container{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
