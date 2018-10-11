@@ -94,8 +94,18 @@ class CustomerController extends ActiveController
     public function actionSendmail()
     {
         $model = new MailForm();
-        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->sendMail()) {
-            return ['result'=>'success'];       
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->validate()) {
+            $customer = Customer::find()
+                    ->where(['email'=>$model->email])
+                    ->orderBy(['date_created'])
+                    ->one();
+            if(!empty($customer)){
+                $sent = $model->sendMail($customer);
+                return $sent;
+            }else{
+                return ['result'=>'customer_not_exist'];
+            }
+      
         }else{
             return $model;
         }

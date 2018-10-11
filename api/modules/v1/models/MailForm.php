@@ -41,22 +41,18 @@ class MailForm extends Model
      * @param string $email the target email address
      * @return bool whether the model passes validation
      */
-    public function sendMail()
+    public function sendMail($customer)
     {
+        $coupon = Coupon::findOne($customer->coupon_id);
         $from = 'noreply@tatcha.com';
         $subject = 'test';
         $body = 'test';
-        $email = $this->email;
-        if ($this->validate()) {
-            Yii::$app->mailer->compose()
-                ->setTo($email)
-                ->setFrom([$from])
-                ->setSubject($subject)
-                ->setTextBody($body)
-                ->send();
-
-            return true;
-        }
-        return false;
+        Yii::$app->mailer->compose()
+            ->setTo($customer->email)
+            ->setFrom([$from])
+            ->setSubject($subject)
+            ->setTextBody($body)
+            ->send();
+        return true;
     }
 }
