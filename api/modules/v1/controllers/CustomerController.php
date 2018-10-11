@@ -10,6 +10,7 @@ use yii\filters\ContentNegotiator;
 use yii\web\Response;
 use api\modules\v1\models\Customer;
 use api\modules\v1\models\Coupon;
+use api\modules\v1\models\MailForm;
 
 class CustomerController extends ActiveController
 {
@@ -41,6 +42,7 @@ class CustomerController extends ActiveController
     {
         $verbs = parent::verbs();
         $verbs[ "register" ] = ['POST','PUT'];
+        $verbs[ "sendmail" ] = ['POST'];
         
         return $verbs;
     }
@@ -86,6 +88,16 @@ class CustomerController extends ActiveController
             }else{
                 return $model;
             }
+        }
+    }
+    
+    public function actionSendmail()
+    {
+        $model = new MailForm();
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->sendMail()) {
+            return ['result'=>'success'];       
+        }else{
+            return $model;
         }
     }
     
