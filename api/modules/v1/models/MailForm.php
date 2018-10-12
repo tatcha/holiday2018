@@ -11,7 +11,7 @@ use yii\base\Model;
 class MailForm extends Model
 {
     public $email;
-
+    public $coupon_type;
 
     /**
      * @return array the validation rules.
@@ -20,7 +20,9 @@ class MailForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['email'], 'required'],
+            [['email','coupon_type'], 'required'],
+            
+            [['coupon_type'], 'string', 'max' => 255],
             // email has to be a valid email address
             ['email', 'email'],
         ];

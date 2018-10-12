@@ -60,7 +60,7 @@ class CustomerController extends ActiveController
                         ->andWhere(['email'=>$model->email])
                         ->exists();
                 if($exists){
-                    return ['result'=>'customer_exist'];
+                    return ['response'=>['status'=>'error', 'error'=>['msg'=>'Your email already exist.']]];
                 }
                 $coupon = Coupon::getRandomCoupon();
                 if(!empty($coupon)){
@@ -80,13 +80,18 @@ class CustomerController extends ActiveController
                         $statusKey = 'golden_status_'.date('Ymd');
                         \app\models\Setting::setValue($statusKey, '1');
                     }
-                    return ['result'=>['coupon_code'=>$coupon->coupon_code,'email'=>$model->email,'coupon_type'=>$coupon->type]];
+                    return ['response'=>['status'=>'success','coupon_code'=>$coupon->coupon_code,'email'=>$model->email,'coupon_type'=>$coupon->type]];
                 }else{
-                    return ['result'=>'coupon_empty'];
+                    return ['response'=>['status'=>'error', 'error'=>['msg'=>'Coupon Empty']]];
                 }
                 return $model;
             }else{
-                return $model;
+                $msgs = [];
+                $errors = $model->getErrors();
+                foreach($errors as $key=>$error){
+                    $msgs['msg'] = $error[0];
+                }
+                return ['response'=>['status'=>'error', 'error'=>$msgs]];
             }
         }
     }
@@ -103,11 +108,16 @@ class CustomerController extends ActiveController
                 $sent = $model->sendMail($customer);
                 return $sent;
             }else{
-                return ['result'=>'customer_not_exist'];
+                return ['response'=>['status'=>'error', 'error'=>['msg'=>'Customer not exist.']]];
             }
       
         }else{
-            return $model;
+            $msgs = [];
+            $errors = $model->getErrors();
+            foreach($errors as $key=>$error){
+                $msgs['msg'] = $error;
+            }
+            return ['response'=>['status'=>'error', 'error'=>$msgs]];
         }
     }
     
