@@ -25,7 +25,7 @@ class CustomerController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
                 'class' => HttpBearerAuth::className(),
-                'only'=>['register'],
+                'only'=>['register', 'sendcoupon'],
         ];
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::className(),
@@ -42,7 +42,7 @@ class CustomerController extends ActiveController
     {
         $verbs = parent::verbs();
         $verbs[ "register" ] = ['POST','PUT'];
-        $verbs[ "sendmail" ] = ['POST'];
+        $verbs[ "sendcoupon" ] = ['POST'];
         
         return $verbs;
     }
@@ -78,7 +78,7 @@ class CustomerController extends ActiveController
                     $model->save(false);
                     if($coupon->type == 'GOLDEN'){
                         $statusKey = 'golden_status_'.date('Ymd');
-                        \app\models\Setting::setValue($statusKey, '1');
+                        \api\modules\v1\models\Setting::setValue($statusKey, '1');
                     }
                     return ['response'=>['status'=>'success','coupon_code'=>$coupon->coupon_code,'email'=>$model->email,'coupon_type'=>$coupon->type]];
                 }else{
@@ -96,17 +96,23 @@ class CustomerController extends ActiveController
         }
     }
     
-    public function actionSendmail()
+    public function actionSendcoupon()
     {
         $model = new MailForm();
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->validate()) {
             $customer = Customer::find()
                     ->where(['email'=>$model->email])
-                    ->orderBy(['date_created'])
+                    ->orderBy('date_created DESC')
                     ->one();
             if(!empty($customer)){
-                $sent = $model->sendMail($customer);
-                return $sent;
+                $result = $model->sendCoupon($customer);
+                if($result['result_code'] == 'Succeeded') {
+                    $customer->delivery_id = $result['messages'][0]['id'];
+                    $customer->save(false);
+                    return ['response'=>['status'=>'success', 'email'=>$customer->email, 'message_id'=> $customer->delivery_id]];
+                }else{
+                    return ['response'=>['status'=>'error', 'error'=>['msg'=>'Something went wrong.']]];
+                }
             }else{
                 return ['response'=>['status'=>'error', 'error'=>['msg'=>'Customer not exist.']]];
             }
