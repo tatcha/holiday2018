@@ -76,27 +76,27 @@ class Coupon extends \yii\db\ActiveRecord
 //        }
         
         $now = date('H:i:s');
-        $glodenHours = ['10:30:00','11:32:00','12:43:00','15:12:00','16:22:00','16:48:00'];
-        $statusKey = 'golden_status_'.date('Ymd');
-        $goldenStatus = Setting::getValue($statusKey);
-        $conditionKey = 'golden_condition_'.date('Ymd');
-        $goldenCondition = Setting::getValue($conditionKey);
-        if(!$goldenCondition){
-            $conditionValue = $glodenHours[array_rand($glodenHours, 1)];
-            Setting::setValue($conditionKey, $conditionValue);
-            $goldenCondition = Setting::getValue($conditionKey);
-        }
-        if(!$goldenStatus && $goldenCondition && (strtotime($now) >= strtotime($goldenCondition))){
-            $type = self::TYPE_GOLDEN;
-        }else{
-            $type = [Coupon::TYPE_1, Coupon::TYPE_2, Coupon::TYPE_3, Coupon::TYPE_4];
-//            foreach ($ini_array as $key=>$value){
-//                if((int)$value >0){
-//                    $type[] = $key;
-//                }
-//            }
-        }
-
+//        $glodenHours = ['10:30:00','11:32:00','12:43:00','15:12:00','16:22:00','16:48:00'];
+//        $statusKey = 'golden_status_'.date('Ymd');
+//        $goldenStatus = Setting::getValue($statusKey);
+//        $conditionKey = 'golden_condition_'.date('Ymd');
+//        $goldenCondition = Setting::getValue($conditionKey);
+//        if(!$goldenCondition){
+//            $conditionValue = $glodenHours[array_rand($glodenHours, 1)];
+//            Setting::setValue($conditionKey, $conditionValue);
+//            $goldenCondition = Setting::getValue($conditionKey);
+//        }
+//        if(!$goldenStatus && $goldenCondition && (strtotime($now) >= strtotime($goldenCondition))){
+//            $type = self::TYPE_GOLDEN;
+//        }else{
+//            $type = [Coupon::TYPE_1, Coupon::TYPE_2, Coupon::TYPE_3, Coupon::TYPE_4];
+////            foreach ($ini_array as $key=>$value){
+////                if((int)$value >0){
+////                    $type[] = $key;
+////                }
+////            }
+//        }
+        $type = [Coupon::TYPE_1, Coupon::TYPE_2, Coupon::TYPE_3, Coupon::TYPE_4];
         $availableCoupons = Coupon::availableCoupons();
         $alertCounts = [50000,20000,15000,10000,7500,5000];
         if(in_array($availableCoupons, $alertCounts)){
