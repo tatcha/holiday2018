@@ -57,7 +57,7 @@ class MailForm extends Model
 
     public static function sendMail($customer,$coupon,$type)
     {
-        $url = 'https://tatcha.slgnt.us/Portal/Api/organizations/TATCHA/journeys/transactional/'+$type+'/send';
+        $url = 'https://tatcha.slgnt.us/Portal/Api/organizations/TATCHA/journeys/transactional/'.$type.'/send';
         $data = array (
                 'items' =>
                         array (
