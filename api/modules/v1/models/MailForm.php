@@ -58,12 +58,17 @@ class MailForm extends Model
     public static function sendMail($customer,$coupon,$type)
     {
 
-        $template['TYPE_1'] = 'Black_Friday_Offer1';
-        $template['TYPE_2'] = 'Black_Friday_Offer1';
-        $template['TYPE_3'] = 'Black_Friday_Offer1';
-        $template['TYPE_4'] = 'Black_Friday_Offer1';
+        if($type == 'TYPE1'){
+            $type = 'Black_Friday_Offer1';
+        } else if($type == 'TYPE2'){
+            $type = 'Black_Friday_Offer1';
+        } else if($type == 'TYPE3'){
+            $type = 'Black_Friday_Offer1';
+        } else if($type == 'TYPE4'){
+            $type = 'Black_Friday_Offer1';
+        }
         
-        $url = 'https://tatcha.slgnt.us/Portal/Api/organizations/TATCHA/journeys/transactional/'.$template[$type].'/send';
+        $url = 'https://tatcha.slgnt.us/Portal/Api/organizations/TATCHA/journeys/transactional/'.$type.'/send';
         $data = array (
                 'items' =>
                         array (
