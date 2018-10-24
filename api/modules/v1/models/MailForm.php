@@ -61,11 +61,11 @@ class MailForm extends Model
         if($type == 'TYPE1'){
             $type = 'Black_Friday_Offer1';
         } else if($type == 'TYPE2'){
-            $type = 'Black_Friday_Offer1';
+            $type = 'Black_Friday_Offer2';
         } else if($type == 'TYPE3'){
-            $type = 'Black_Friday_Offer1';
+            $type = 'Black_Friday_Offer3';
         } else if($type == 'TYPE4'){
-            $type = 'Black_Friday_Offer1';
+            $type = 'Black_Friday_Offer4';
         }
         
         $url = 'https://tatcha.slgnt.us/Portal/Api/organizations/TATCHA/journeys/transactional/'.$type.'/send';
