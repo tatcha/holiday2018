@@ -7,6 +7,7 @@ $config = [
     'id' => 'api',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'timezone' => 'America/Los_Angeles',
     //'aliases' => [ '@app' => dirname(dirname(__DIR__))  ],
     'modules' => [
         'v1' => [
