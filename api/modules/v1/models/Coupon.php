@@ -68,12 +68,12 @@ class Coupon extends \yii\db\ActiveRecord
     public static function getRandomCoupon()
     {
         $type = [];
-//        $ini_array = Coupon::readINI();
-//        $typeSum = array_sum($ini_array);
-//        if($typeSum<=0){
-//            self::resetINI();
-//            $ini_array = Coupon::readINI();
-//        }
+        $ini_array = Coupon::readINI();
+        $typeSum = array_sum($ini_array);
+        if($typeSum<=0){
+            self::resetINI();
+            $ini_array = Coupon::readINI();
+        }
         
         $now = date('H:i:s');
 //        $glodenHours = ['10:30:00','11:32:00','12:43:00','15:12:00','16:22:00','16:48:00'];
@@ -96,7 +96,13 @@ class Coupon extends \yii\db\ActiveRecord
 ////                }
 ////            }
 //        }
-        $type = [Coupon::TYPE_1, Coupon::TYPE_2, Coupon::TYPE_3, Coupon::TYPE_4];
+        
+        foreach ($ini_array as $key=>$value){
+            if((int)$value >0){
+                $type[] = $key;
+            }
+        }
+        //$type = [Coupon::TYPE_1, Coupon::TYPE_2, Coupon::TYPE_3, Coupon::TYPE_4];
         $availableCoupons = Coupon::availableCoupons();
         $alertCounts = [50000,20000,15000,10000,7500,5000];
         if(in_array($availableCoupons, $alertCounts)){
@@ -110,10 +116,10 @@ class Coupon extends \yii\db\ActiveRecord
                     ->orderBy('rand()')
                     ->limit(1)
                     ->one();
-//            if(isset($model->type) && isset($ini_array[$model->type])){
-//                $ini_array[$model->type] = (int) $ini_array[$model->type]-1; 
-//                self::writeINI($ini_array);
-//            }
+            if(isset($model->type) && isset($ini_array[$model->type])){
+                $ini_array[$model->type] = (int) $ini_array[$model->type]-1; 
+                self::writeINI($ini_array);
+            }
             return $model;
         }else{
             return null;
@@ -122,14 +128,14 @@ class Coupon extends \yii\db\ActiveRecord
     
     public static function readINI()
     {
-        $dataINI = Yii::getAlias('@webroot/core_framework/config/data.ini');
+        $dataINI = Yii::getAlias('@webroot/config/data.ini');
         $ini_array = parse_ini_file($dataINI);
         return $ini_array;
     }
     
     public static function writeINI($data)
     {
-        $dataINI = Yii::getAlias('@webroot/core_framework/config/data.ini');
+        $dataINI = Yii::getAlias('@webroot/config/data.ini');
         $writeBuffer = ';data.ini'.PHP_EOL;
                 foreach ($data as $name=>$value)
                         $writeBuffer .= "$name = $value".PHP_EOL;
