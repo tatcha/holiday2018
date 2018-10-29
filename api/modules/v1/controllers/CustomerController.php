@@ -104,8 +104,10 @@ class CustomerController extends ActiveController
                     ->where(['email'=>$model->email])
                     ->orderBy('date_created DESC')
                     ->one();
-            if(!empty($customer)){
-                $result = $model->sendCoupon($customer);
+            $type = $model->coupon_type;
+            
+            if(!empty($customer) && !empty($type)){
+                $result = $model->sendCoupon($customer,$type);
                 if($result['result_code'] == 'Succeeded') {
                     $customer->delivery_id = $result['messages'][0]['id'];
                     $customer->delivery_status = 1;

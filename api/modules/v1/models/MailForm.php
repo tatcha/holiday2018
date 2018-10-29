@@ -43,13 +43,17 @@ class MailForm extends Model
      * @param string $email the target email address
      * @return bool whether the model passes validation
      */
-    public function sendCoupon($customer)
+    public function sendCoupon($customer,$type)
     {
         $coupon = Coupon::findOne($customer->coupon_id);
         $from = 'noreply@tatcha.com';
         $subject = 'test';
         $body = 'test';
-        $type = 'Black_Friday_Offer1';
+        
+        if($coupon->type != $type){
+            return false;
+        }
+        
         $result = self::sendMail($customer,$coupon,$type);
         return $result;
     }
