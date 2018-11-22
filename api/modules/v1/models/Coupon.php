@@ -20,10 +20,10 @@ class Coupon extends \yii\db\ActiveRecord
     const TYPE_GOLDEN = 'GOLDEN';
     
     const TYPE_DATA = [
-            self::TYPE_1 => '20% off $100+ order',
-            self::TYPE_2 => '$20 off $100+ order',
-            self::TYPE_3 => '$15 off $75+ order',
-            self::TYPE_4 => 'FS Hand Cream with $100 purchase',
+            self::TYPE_1 => 'Travel-Size Serum Duo',
+            self::TYPE_2 => 'Full Size Tinted Lip Oil',
+            self::TYPE_3 => '20% off a $100+ order',
+            self::TYPE_4 => '$15 off a $75+ order',
             self::TYPE_GOLDEN => 'Golden Ticket'
             ];
     /**
