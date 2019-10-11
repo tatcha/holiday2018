@@ -108,8 +108,8 @@ class CustomerController extends ActiveController
             
             if(!empty($customer) && !empty($type)){
                 $result = $model->sendCoupon($customer,$type);
-                if($result['result_code'] == 'Succeeded') {
-                    $customer->delivery_id = $result['messages'][0]['id'];
+                if($result) {
+                    $customer->delivery_id = 1;
                     $customer->delivery_status = 1;
                     $customer->save(false);
                     return ['response'=>['status'=>'success', 'email'=>$customer->email, 'message_id'=> $customer->delivery_id]];

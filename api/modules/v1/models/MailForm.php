@@ -72,35 +72,29 @@ class MailForm extends Model
             $type = 'Black_Friday_Offer4';
         }
         
-        $url = 'https://tatcha.slgnt.us/Portal/Api/organizations/TATCHA/journeys/transactional/'.$type.'/send';
+        
+        $url = 'https://a.klaviyo.com/api/track';
         $data = array (
-                'items' =>
-                        array (
-                                0 =>
-                                array (
-                                'recipient' => $customer->email,
-                                'language' => 'EN',
-                                'data' =>
-                                        array (
-                                        'PROMO_CODE' =>$coupon->coupon_code,
-                                        ),
-                                ),
-                ),
-        );
-        $data_string = json_encode($data);
+                'token' => 'pk_012ff1252c05c17490b409a3a807ed6f98',
+                'event' => 'Black Friday Promo',
+                'customer_properties' =>
+                    array (
+                        '$email' => $customer->email,
+                     ),
+                'properties' =>
+                    array (
+                        '$event_id' => uniqid(md5($customer->email)),
+                        'promoCode' => $coupon->coupon_code,
+                        'promoType' => $type,
+                    ),
+                'time' => time(),
+                );
 
+        $data_string = base64_encode(json_encode($data));
+        $url = $url.'?data='.$data_string;
         $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Accept: application/json',
-            'X-ApiKey: 3HxZVl6JTnlVVvlaI2FErOXLkQrer0WA8LSaRjCI7g4=:mvpmewfrmx0gbJChk2Nh+orexM36M3tks+Kg6cqQ67c=',
-            'Content-Length: ' . strlen($data_string))
-        );
-
-        $result = curl_exec($ch);
-        return json_decode($result, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        $status = curl_exec($ch);
+        return $status;
     }
 }
